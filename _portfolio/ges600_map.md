@@ -1,7 +1,7 @@
 ---
 title: "Creating a Small Multiple Map from Race & Ethnicity Data"
 excerpt: "A written report that aims to highlight the uses of the small multiples principle using COVId-19 data in NYC.
- <br/><img src='/images/small_multiples500px.jpg'>"
+ <br/><img src='/images/small_multiples_500px.jpg'>"
 collection: portfolio
 ---
 
