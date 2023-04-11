@@ -5,7 +5,7 @@ excerpt: "A written report that aims to highlight the uses of the small multiple
 collection: portfolio
 ---
 
-
+[Download paper here](https://github.com/klmoy/klmoy.github.io/blob/master/files/Moy_assignmentNine.pdf)
 
 ![Bivariate map](/images/covid_idx_bivariate.jpg "Bivariate map")
 
