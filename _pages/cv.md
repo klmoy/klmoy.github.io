@@ -16,24 +16,24 @@ Education
 
 Work experience
 ======
-* Summer 2015: Research Assistant
+* 
   * 
   * Duties included: 
   * Supervisor: 
 
-* Fall 2015: Research Assistant
+* 
   * 
   * Duties included: 
   * Supervisor: 
   
 Skills
 ======
-* Skill 1
-* Skill 2
+* R
+* ArcGIS Pro
   * Sub-skill 2.1
   * Sub-skill 2.2
   * Sub-skill 2.3
-* Skill 3
+* QGIS
 
 Publications
 ======
