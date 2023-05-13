@@ -13,39 +13,26 @@ Education
 ======
 * B.S. in Ecology, Evolution, and Natural Resources, Rutgers University, 2016
 * M.P.S. in GIS, University of Baltimore County, 2024 (expected)
-
-Work experience
-======
-* 
-  * 
-  * Duties included: 
-  * Supervisor: 
-
-* 
-  * 
-  * Duties included: 
-  * Supervisor: 
   
 Skills
 ======
-* R
+* R 
+* Python
+* GeoDa
+  * Cluster Analysis
+  * Regression Modeling
+* ArcGIS Online
 * ArcGIS Pro
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
+  * Data Manipulation
+  * Spatial Analysis
+  * Map layouts
 * QGIS
-
-Publications
-======
-  <ul>{% for post in site.publications %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Talks
-======
-  <ul>{% for post in site.talks %}
-    {% include archive-single-talk-cv.html %}
-  {% endfor %}</ul>
+  * Data Manipulation
+  * Spatial Analysis
+  * Map layouts
+* html
+* JavaScript
+*   ArcGIS JS API
   
 Teaching
 ======
