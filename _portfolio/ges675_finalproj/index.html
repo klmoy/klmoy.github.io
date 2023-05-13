@@ -1,0 +1,361 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <title>Cost of renting in college towns</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      aside {
+      position: absolute;
+      top: 225px;
+      right: 70px;
+	  width: 25%;
+	  padding-left: 15px;
+	  margin-left: 15px;
+	  float: right;
+	  font-style: italic;
+	  background-color: lightgray;
+	  border-style: solid;
+	  border-color: black;
+	  border-width: 2px;
+	  }
+	  
+	/* help Popup container */
+	.popup {
+	  position: absolute;
+	  left: 10px;
+	  top: 170px;
+	  background-color: #daf23f;
+	  border-style: solid;
+	  border-color: #daf23f;
+	  border-width: 2px;
+	  cursor: help;
+	  -webkit-user-select: none;
+	  -moz-user-select: none;
+	  -ms-user-select: none;
+	  user-select: none;
+	}
+	
+	/* The help popup style*/
+	.popup .popuptext {
+	  visibility: hidden;
+	  width: 300px;
+	  background-color: #d9d3de;
+	  color: black;
+	  text-align: left;
+	  border-style: solid;
+	  border-width: 2px;
+	  padding: 8px 0;
+	  position: absolute;
+	  z-index: 1;
+	  top: 200%;
+	  left: 50%;
+	  margin-left: 50px;
+	}
+	
+	/* Toggle this class - hide and show the popup */
+	.popup .show {
+	  visibility: visible;
+	  -webkit-animation: fadeIn 1s;
+	  animation: fadeIn 1s;
+	}
+	
+	/* Add animation (fade in the popup) */
+	@-webkit-keyframes fadeIn {
+	  from {opacity: 0;} 
+	  to {opacity: 1;}
+	}
+	
+	@keyframes fadeIn {
+	  from {opacity: 0;}
+	  to {opacity:1 ;}
+	}
+
+      .esri-popup--is-docked-top-right .esri-popup__main-container {
+        max-height: 100%;
+      }
+
+      #appContainer {
+        display: flex;
+        margin-left: 10px;
+        border-style: solid;
+        border-color: black;
+        border-width: 5px;
+		flex-direction: column;
+        height: 80%;
+        width: 60%;
+      }
+
+      #viewDiv {
+        flex: 10;
+        width: 100%;
+      }
+
+      .container {
+        display: flex;
+        flex: 1;
+        width: 100%;
+      }
+
+      .labelText {
+        padding-left: 5px;
+        font-size: 15px;
+      }
+
+      #mainDiv {
+        padding: 8px;
+      }
+    </style>
+
+    <script>
+    var myview;
+    let featuresWithin="Features selected within sketch radius:<br>";
+
+  
+    //Create toggle button for help button
+	function showHelp() {
+	  var popup = document.getElementById("myPopup");
+	  popup.classList.toggle("show");
+	};
+	
+      require([
+        "esri/WebMap",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Sketch",
+        "esri/layers/SubtypeGroupLayer",
+        "esri/widgets/Search",
+    	"esri/Graphic",
+    	"esri/geometry/Circle",
+    	"esri/geometry/Polygon",
+      ], (WebMap, MapView, FeatureLayer, Sketch, SubtypeGroupLayer, Search, Graphic, Circle, Polygon) => {
+        let selectedFeature, id;
+
+        const showName = {
+                title: "Show College",
+                id: "showname",
+                image: "show.png"
+                };
+        
+
+           
+        let zoomOutAction = {
+                  title: "Zoom out",
+                  id: "zoom-out",
+                  className: "esri-icon-zoom-out-magnifying-glass"
+                };
+
+
+        function zoomOut() {
+            if(view.zoom<2){
+                return;
+            }
+               view.goTo({
+                    center: view.center,
+                    zoom: view.zoom - 2
+               });
+            }
+        
+        
+
+        const layer = new FeatureLayer({
+          url: "https://services1.arcgis.com/diQbEFavWah0WAHd/arcgis/rest/services/college town affordability/FeatureServer/0",
+          		visible: false,
+       		  popupTemplate:{
+        			  title:"{NAME}",
+                  	actions: [showName],
+                  	content: "<b>Address:</b> {ADDRESS}, {CITY}, {STATE}, {ZIPCODE}<br><br>"
+                  			+"Average cost of in-state tuition, living off-campus: <b>${Total price for in-state studen}</b><br><br>"
+                  			+"<b>Fair Market Rental Prices in {FY23_FMRs_hud_area_name}:</b><br><br>"
+                  			+"Studio: <b>${FY23_FMRs_fmr_0}</b><br>"
+                  			+"1 Bedroom:<b> ${FY23_FMRs_fmr_1}</b><br>"
+                  			+"2 Bedroom:<b> ${FY23_FMRs_fmr_2}</b><br>"
+                  			+"3 Bedroom:<b> ${FY23_FMRs_fmr_3}</b><br>"
+                  			+"4 Bedroom:<b> ${FY23_FMRs_fmr_4}</b><br>"
+                  			}
+          });
+        
+        
+        const webmap = new WebMap({
+          portalItem: {
+            id: "ffbc5d9f91ba4669af833c8fdf5c8d0f"}
+        });
+
+        const view = new MapView({
+          map: webmap,
+          container: "viewDiv",
+          zoom: 5,
+          center: [-98, 38.5],
+          popup: {
+            dockEnabled: true,
+            dockOptions: {
+              buttonEnabled: false,
+              breakpoint: false
+            }},
+            highlightOptions: {			// Set highlighted feature color and opacity.
+    	  		color: "#ff0000",
+    	  		fillOpacity: 0.4
+    	  	}
+        });
+        
+        webmap.add(layer)
+        myview=view;
+        
+      
+          // Get references to div elements for toggling table visibility
+          const appContainer = document.getElementById("appContainer");
+          const tableContainer = document.getElementById("tableContainer");
+          const tableDiv = document.getElementById("tableDiv");
+
+         
+      	// Create a search widget.
+          const searchWidget = new Search({
+              view: view,
+              allPlaceholder: "Search for a college by name or city", // Default text fore user input.
+              includeDefaultSources: false,
+              locationEnabled: false,
+              suggestionsEnabled: true,
+              sources:[{
+                  layer: layer,
+                  searchFields: ["NAME", "CITY"],  // The search widget will use the "areaname" field to do your search.
+                  exactMatch: false,
+                  outFields: ["*"], // All fields specified in layer.popupTemplate.content
+                  placeholder: "Search for a college", // Placeholder text that appears in search box before user input. 
+                  name: "{NAME}",
+                  zoomScale: 50000
+                }]         
+            });
+          
+          // Add search widget to mapView in order to see it.
+          view.ui.add(searchWidget, {
+              position: "top-right"
+            });
+
+          let sketch = new Sketch({
+        	  layer:view.graphics,
+        	  creationMode: "update",
+        	  availableCreateTools: ["polygon", "rectangle", "circle"],
+               view: view
+        	});	
+          view.ui.add(sketch, {
+             position: "top-right"
+          });
+
+          // Create query for sketch tool
+          let query = layer.createQuery();
+
+          // Set event handler for sketch tool.
+          sketch.on("create", function(event) {
+        	  if (event.state === "complete") {
+        		// Define sketch geometry as a variable.  
+        	    let circledFeatures = event.graphic.geometry;
+        		// Query the drawn geometry.
+        	    query.geometry=circledFeatures;
+        		// Query on any schools that intersect with sketch geometry.
+        	    query.spatialRelationship = "intersects";
+        		// For every feature that intersects with the drawn geometry, 
+        		// return its NAME in the featuresWithin list, and highlight the point.
+        	    layer.queryFeatures(query).then(function(response){
+        	    	   response.features.forEach((afeature) => {
+            	           featuresWithin=featuresWithin+"<li>"+afeature.attributes["NAME"]+"</li>";
+        	    		   afeature.symbol = {
+        	    				   type: "simple-marker",  
+        	    	    		    size: 5,
+        	    	    		    color: "yellow",
+        	    	    		    opacity: 60,
+        	    	    		    outline: {  
+        	    	    		      width: 0.6,
+        	    	    		      color: "lightgreen"
+        	    		    		}
+        	    		  	};
+        	    		   // Add sketch graphic to view.
+        	    		   view.graphics.add(afeature);
+        	           });
+        	           console.log(featuresWithin);
+        	           
+        	           // Generates a list of features captured within sketch.
+        	           document.getElementById("featuresWithin").innerHTML=featuresWithin;        	    	   
+        	     });
+        	}});
+          
+
+
+        	    // selected graphics can be deleted only when update event becomes active
+        	       sketch.on("update", function(event) {
+        	         if (event.state === "active") {
+        	           sketch.delete();
+        	         }
+        	       });
+
+        	       // fires after delete method is called
+        	       // returns references to deleted graphics.
+        	       sketch.on("delete", function(event) {
+        	         event.graphics.forEach(function(graphic){
+        	           console.log("deleted", graphic)
+        	         });
+        	       });
+          
+          // Set event handler for showname popup.	
+          view.popup.on("trigger-action", (event) => {
+              if (event.action.id === "showname") {
+                document.getElementById("SchoolName").innerHTML=view.popup.selectedFeature.attributes.NAME;
+              }
+            });
+          
+          // Add zoom-out button to view.
+          view.popup.actions.push(zoomOutAction);
+          
+          // Set event handler for zoom-out action button.
+          view.popup.on("trigger-action", function(event){
+            if(event.action.id === "zoom-out"){
+               zoomOut();
+            }
+          });
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1 style="text-align: center; font-family: 'Lucida Console'"> Fair Market Renting in U.S. College Towns</h1>
+<p style="text-align: center; font-family: 'Lucida Console'">
+		This web app tool was designed to help prospective college students
+	<br>determine if the costs of tuition and living off-campus in a given college town
+	<br>is financially feasible. College demographics included in this app are the 
+	<br>average cost of in-state tuition if living off-campus and fair market renting
+	<br>prices for studio to 4 bedroom rental units. Fair market renting prices are
+	<br>aggregated at the HUD area geographic-level.</p>
+<div class="popup" onclick="showHelp()"> <strong>Click for help!</strong>
+  <span class="popuptext" id="myPopup">
+  	<strong>TIPS:</strong><br>
+  	<br><b>1.</b> Use the search bar to find a school. The map will center and zoom to your searched school. A popup will appear with costs of tuition and rental units.<br>
+  	<br><b>2.</b> Use the sketch tool to highlight multiple schools in a specific area. Any school that intersects with your drawn geometry will be automatically highlighted 
+  		on the map and a list of the highlighted schools will appear on the right side of the window, outside of the mapview.<br>
+  	<br><b>3.</b> You can also click on any cluster of schools that appears on the map, which will allow you to zoom in and visualize the relative locations of schools within
+  		that cluster.<br>
+  	<br><b>4.</b> Finally, you can browse the fair market renting prices in any HUD area in the United States by selecting any area; the HUD area polygon will be highlighted
+  		once selected, and a popup containing only rental pricing will appear.</span>
+</div>
+  <br>
+    <div id="appContainer">
+      <div id="viewDiv"></div>
+      </div>
+      <div id="mainDiv" class="esri-widget">
+         <aside> <!--  Use aside tag to create a separate container for featuresWithin list -->
+          <span id="featuresWithin"></span>
+         </aside>
+  <span id="SchoolName"></span>
+  
+    <div id="viewDiv"></div>
+    </div>
+  </body>
+</html>
