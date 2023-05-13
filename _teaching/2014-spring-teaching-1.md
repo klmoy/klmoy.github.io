@@ -3,7 +3,7 @@ title: "Dendrology TA"
 collection: teaching
 type: "Undergraduate course"
 permalink: /teaching/2014-fall-teaching-1
-venue: "Rutgers Universit, Department of EENR"
+venue: "Rutgers University, Department of EENR"
 date: 2014-09-01
 location: "New Brunswick, NJ"
 ---
