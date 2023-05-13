@@ -1,14 +1,16 @@
 ---
-title: "Teaching experience 1"
+title: "Dendrology TA"
 collection: teaching
 type: "Undergraduate course"
-permalink: /teaching/2014-spring-teaching-1
-venue: "University 1, Department"
-date: 2014-01-01
-location: "City, Country"
+permalink: /teaching/2014-fall-teaching-1
+venue: "Rutgers Universit, Department of EENR"
+date: 2014-09-01
+location: "New Brunswick, NJ"
 ---
 
-This is a description of a teaching experience. You can use markdown like any other post.
+Researched and planned walking routes for species to be taught weekly on/off campus
+Graded lecture and laboratory quizzes and exams.
+
 
 Heading 1
 ======
