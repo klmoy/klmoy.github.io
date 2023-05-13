@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "academicpages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: "Kari Moy - About Me"
 excerpt: "About me"
 author_profile: true
 redirect_from: 
@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-Welcome to the professional website of Kari Moy, a Professional Master's student in GIS at the University of Baltimore County. Kari has a passion for ecological conservation and making data more accessible to the public. With a diverse skill set including, proficiency with several coding languages, spatial analytical tools, and and a background in ecological research, science education, and natural resource management, Kari is committed to making a meaningful impact in the field.
+Welcome to the professional website of Kari Moy, a Professional Master's student in GIS at the University of Maryland Baltimore County. Kari has a passion for ecological conservation and making data more accessible to the public. With a diverse skill set including, proficiency with several coding languages, spatial analytical tools, and and a background in ecological research, science education, and natural resource management, Kari is committed to making a meaningful impact in the field.
 
 As you explore this website, you'll learn more about Kari's professional journey, including their educational background, experience, and expertise in GIS. With an expected graduation date in 2024, Kari is eager to apply their skills and knowledge to ecological conservation efforts and other important initiatives.
 
