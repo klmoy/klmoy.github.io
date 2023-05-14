@@ -23,15 +23,17 @@
       
       aside {
 	      position: absolute;
+	      display: flex;
+	      flex-direction: column;
 	      top: 225px;
 	      right: 10px;
 	      width: auto;
 		  padding-left: 10px;
 		  padding-right: 10px;
-		  margin-left: 65%;
+		  margin-left: 75%;
 		  float: right;
 		  font-style: italic;
-		  font-size: 16px;
+		  font-size: auto;
 		  background-color: #d9d3de;
 		  border-style: solid;
 		  border-color: black;
@@ -41,11 +43,12 @@
 	  section {
 	  	  position: absolute;
 	  	  display: flex;
+	  	  flex-direction: column;
 	      top: 225px;
 	      left: 10px;
 	      height: auto;
-		  width: auto;
-		  margin-left: 15px;
+		  width: 15%;
+		  margin-left: 5%;
 		  float: left;
 		  padding: .5%;
 	  }
@@ -140,6 +143,7 @@
         display: flex;
         flex: 1;
         width: 100%;
+        padding: 10px;
       }
 
       .labelText {
@@ -386,10 +390,10 @@
       </div>
       <div id="mainDiv" class="esri-widget">
       	<section>
-      	  <img src="finalproj_legend.JPG">
+      	  <img style="width: 100%" src="finalproj_legend.JPG">
       	</section>
          <aside> <!--  Use aside tag to create a separate container for featuresWithin list -->
-           <span id="featuresWithin">Use the sketch tool to see a list of schools within a drawn radius.</span>
+           <span style="font-size: 16px" id="featuresWithin">Use the sketch tool to see a list of schools within a drawn radius.</span>
          </aside>
     <div id="viewDiv"></div>
     </div>
