@@ -5,6 +5,6 @@ excerpt: "A basic web application that utilizes the ArcGIS JavaScript API.
 collection: portfolio
 ---
 
-<a href='ges675_finalproj/index.html' target='_blank'>Access html file</a>
+[Use the web app]('ges675_finalproj/index.html' target='_blank')
 
 Description of project workflow.
