@@ -9,34 +9,53 @@
 
     <style>
       html,
+      header {
+      	padding: 5px;
+      }
+      
       body {
         height: 100%;
         width: 100%;
         margin: 0;
         padding: 0;
       }
+      
       aside {
-      position: absolute;
-      top: 225px;
-      right: 70px;
-	  width: 25%;
-	  padding-left: 15px;
-	  margin-left: 15px;
-	  float: right;
-	  font-style: italic;
-	  background-color: lightgray;
-	  border-style: solid;
-	  border-color: black;
-	  border-width: 2px;
+	      position: absolute;
+	      top: 225px;
+	      right: 70px;
+		  width: 25%;
+		  padding-left: 15px;
+		  margin-left: 15px;
+		  float: right;
+		  font-style: italic;
+		  background-color: #d9d3de;
+		  border-style: solid;
+		  border-color: black;
+		  border-width: 2px;
 	  }
+	  
+	  footer {
+	  position: absolute;
+	  margin-left: 10px;
+	  padding: 5px;
+	  }
+	    
+	/* sources style*/
+	.sourceLinks {
+	font-style: italic;
+	font-size: 12px;
+	color: blue;
+	}
 	  
 	/* help Popup container */
 	.popup {
 	  position: absolute;
 	  left: 10px;
-	  top: 170px;
+	  top: 185px;
 	  background-color: #daf23f;
 	  border-style: solid;
+	  border-radius: 5px;
 	  border-color: #daf23f;
 	  border-width: 2px;
 	  cursor: help;
@@ -119,7 +138,7 @@
 
     <script>
     var myview;
-    let featuresWithin="Features selected within sketch radius:<br>";
+    let featuresWithin="Features selected within sketch radius:<br><br>";
 
   
     //Create toggle button for help button
@@ -176,7 +195,7 @@
                   	actions: [showName],
                   	content: "<b>Address:</b> {ADDRESS}, {CITY}, {STATE}, {ZIPCODE}<br><br>"
                   			+"Average cost of in-state tuition, living off-campus: <b>${Total price for in-state studen}</b><br><br>"
-                  			+"<b>Fair Market Rental Prices in {FY23_FMRs_hud_area_name}:</b><br><br>"
+                  			+"<strong>Fair Market Rental Prices in {FY23_FMRs_hud_area_name}:</strong><br><br>"
                   			+"Studio: <b>${FY23_FMRs_fmr_0}</b><br>"
                   			+"1 Bedroom:<b> ${FY23_FMRs_fmr_1}</b><br>"
                   			+"2 Bedroom:<b> ${FY23_FMRs_fmr_2}</b><br>"
@@ -308,7 +327,7 @@
           // Set event handler for showname popup.	
           view.popup.on("trigger-action", (event) => {
               if (event.action.id === "showname") {
-                document.getElementById("SchoolName").innerHTML=view.popup.selectedFeature.attributes.NAME;
+                document.getElementBy.id("SchoolName").innerHTML=view.popup.selectedFeature.NAME;
               }
             });
           
@@ -326,14 +345,14 @@
   </head>
 
   <body>
-    <h1 style="text-align: center; font-family: 'Lucida Console'"> Fair Market Renting in U.S. College Towns</h1>
-<p style="text-align: center; font-family: 'Lucida Console'">
-		This web app tool was designed to help prospective college students
-	<br>determine if the costs of tuition and living off-campus in a given college town
-	<br>is financially feasible. College demographics included in this app are the 
-	<br>average cost of in-state tuition if living off-campus and fair market renting
-	<br>prices for studio to 4 bedroom rental units. Fair market renting prices are
-	<br>aggregated at the HUD area geographic-level.</p>
+    <h1 style="text-align: center; font-family: 'Lucida Console'; background-color: #daf23f"> Fair Market Renting in U.S. College Towns</h1>
+	<p style="text-align: center; font-family: 'Lucida Console'; background-color: #d9d3de">
+			This web app tool was designed to help prospective college students
+		<br>determine if the costs of tuition and living off-campus in a given college town
+		<br>is financially feasible. College demographics included in this app are the 
+		<br>average cost of in-state tuition if living off-campus and fair market renting
+		<br>prices for studio to 4 bedroom rental units. Fair market renting prices are
+		<br>aggregated at the HUD area geographic-level.</p>
 <div class="popup" onclick="showHelp()"> <strong>Click for help!</strong>
   <span class="popuptext" id="myPopup">
   	<strong>TIPS:</strong><br>
@@ -351,11 +370,17 @@
       </div>
       <div id="mainDiv" class="esri-widget">
          <aside> <!--  Use aside tag to create a separate container for featuresWithin list -->
-          <span id="featuresWithin"></span>
+          <span id="featuresWithin">Use the sketch tool to see a list of schools within a drawn radius.</span>
          </aside>
-  <span id="SchoolName"></span>
-  
     <div id="viewDiv"></div>
     </div>
+      <span id="SchoolName"></span>
   </body>
+  <footer id="siteInfo">Author: <a href="https://klmoy.github.io/" target="_blank">Kari Moy</a><br>Last edited: 05-14-2023<br><br> <b>Data Sources:</b><br>
+	  <div id="sourceLinks">
+		  <a href="https://www.arcgis.com/home/item.html?id=79af154f6be44d3e875bcfc28926ef5d" target="_blank">HUD - Fair Market Rental Feature Layer</a>
+		  <br> <a href="https://www.arcgis.com/home/item.html?id=79af154f6be44d3e875bcfc28926ef5d" target="_blank">OGC Features - Educational Structures Feature Layer</a>
+		  <br> <a href="https://nces.ed.gov/ipeds/datacenter/DataFiles.aspx?year=-1&gotoReportId=7&" target="_blank">IPEDS – 2021 Institutional Characteristics: Student charges for academic year programs (IC2021_AY)</a>
+	  </div>
+  </footer>
 </html>
