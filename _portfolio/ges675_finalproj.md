@@ -1,7 +1,7 @@
 ---
 title: "Web Applications of GIS - Final Project"
 excerpt: "A basic web application that utilizes the ArcGIS JavaScript API.
- <br/><img src='/_portfolio/images/ges675_finalproj_screenshot.JPG'>"
+ <br/><img src='/portfolio/images/ges675_finalproj_screenshot.JPG'>"
 collection: portfolio
 ---
 
