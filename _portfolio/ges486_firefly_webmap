@@ -1,9 +1,9 @@
 ---
 title: "Advanced GIS - QGIS 2 WebMap"
 excerpt: "A basic web map generated using the qgis2web plug-in
- <br/><img src='images/firefly_webmap_screenshot.JPG'>"
+ <br/><img src='/images/firefly_webmap_screenshot.JPG'>"
 collection: portfolio
 ---
-<a href='qgis2web_2023_05_13-12_15_24_869504/index.html' target='_blank'>Access html file</a>
+<a href='/qgis2web_2023_05_13-12_15_24_869504/index.html' target='_blank'>Access html file</a>
 
 Description of project workflow.
