@@ -1,7 +1,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, width=device-width, user-scalable=no" />
     <title>Cost of renting in college towns</title>
 
     <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
@@ -11,6 +11,7 @@
       html,
       header {
       	padding: 5px;
+      	margin-top: 10px;
       }
       
       body {
@@ -23,22 +24,37 @@
       aside {
 	      position: absolute;
 	      top: 225px;
-	      right: 70px;
-		  width: 25%;
-		  padding-left: 15px;
-		  margin-left: 15px;
+	      right: 10px;
+	      width: auto;
+		  padding-left: 10px;
+		  padding-right: 10px;
+		  margin-left: 65%;
 		  float: right;
 		  font-style: italic;
+		  font-size: 16px;
 		  background-color: #d9d3de;
 		  border-style: solid;
 		  border-color: black;
 		  border-width: 2px;
 	  }
 	  
+	  section {
+	  	  position: absolute;
+	  	  display: flex;
+	      top: 225px;
+	      left: 10px;
+	      height: auto;
+		  width: auto;
+		  margin-left: 15px;
+		  float: left;
+		  padding: .5%;
+	  }
+	  
 	  footer {
 	  position: absolute;
 	  margin-left: 10px;
 	  padding: 5px;
+	  float: bottom;
 	  }
 	    
 	/* sources style*/
@@ -106,13 +122,13 @@
 
       #appContainer {
         display: flex;
-        margin-left: 10px;
+        margin-left: 25%;
         border-style: solid;
         border-color: black;
         border-width: 5px;
 		flex-direction: column;
-        height: 80%;
-        width: 60%;
+        height: 70%;
+        width: 50%;
       }
 
       #viewDiv {
@@ -141,7 +157,7 @@
     let featuresWithin="Features selected within sketch radius:<br><br>";
 
   
-    //Create toggle button for help button
+    // Create toggle button for help button
 	function showHelp() {
 	  var popup = document.getElementById("myPopup");
 	  popup.classList.toggle("show");
@@ -157,7 +173,8 @@
     	"esri/Graphic",
     	"esri/geometry/Circle",
     	"esri/geometry/Polygon",
-      ], (WebMap, MapView, FeatureLayer, Sketch, SubtypeGroupLayer, Search, Graphic, Circle, Polygon) => {
+    	"esri/widgets/Legend"
+      ], (WebMap, MapView, FeatureLayer, Sketch, SubtypeGroupLayer, Search, Graphic, Circle, Polygon, Legend) => {
         let selectedFeature, id;
 
         const showName = {
@@ -235,7 +252,6 @@
           const appContainer = document.getElementById("appContainer");
           const tableContainer = document.getElementById("tableContainer");
           const tableDiv = document.getElementById("tableDiv");
-
          
       	// Create a search widget.
           const searchWidget = new Search({
@@ -369,12 +385,17 @@
       <div id="viewDiv"></div>
       </div>
       <div id="mainDiv" class="esri-widget">
+      	<section>
+      	  <img src="finalproj_legend.JPG">
+      	</section>
          <aside> <!--  Use aside tag to create a separate container for featuresWithin list -->
-          <span id="featuresWithin">Use the sketch tool to see a list of schools within a drawn radius.</span>
+           <span id="featuresWithin">Use the sketch tool to see a list of schools within a drawn radius.</span>
          </aside>
     <div id="viewDiv"></div>
     </div>
       <span id="SchoolName"></span>
+      
+
   </body>
   <footer id="siteInfo">Author: <a href="https://klmoy.github.io/" target="_blank">Kari Moy</a><br>Last edited: 05-14-2023<br><br> <b>Data Sources:</b><br>
 	  <div id="sourceLinks">
