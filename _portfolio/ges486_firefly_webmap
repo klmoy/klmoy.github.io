@@ -4,6 +4,6 @@ excerpt: "A basic web map generated using the qgis2web plug-in
  <br/><img src='/images/ges675_finalproj_screenshot.jpg'>"
 collection: portfolio
 ---
-[Lemme see the map!](https://github.com/klmoy/klmoy.github.io/_portfolio/firefly webmap/index.html)
+<a href='firefly webmap/index.html' target='_blank'>Access html file</a>
 
 Description of project workflow.
