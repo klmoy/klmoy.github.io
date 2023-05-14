@@ -5,6 +5,6 @@ excerpt: "A basic web application that utilizes the ArcGIS JavaScript API.
 collection: portfolio
 ---
 
-[Check out the web app](https://github.com/klmoy/klmoy.github.io/_portfolio/ges675_finalproj/index.html)
+[Check out the web app](/ges675_finalproj/index.html)
 
 Description of project workflow.
