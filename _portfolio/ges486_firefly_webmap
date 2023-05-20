@@ -1,9 +1,21 @@
 ---
 title: "Advanced GIS - QGIS 2 WebMap"
 excerpt: "A basic web map generated using the qgis2web plug-in
- <br/><img src='/portfolio/images/firefly_webmap_screenshot.JPG'>"
+ <br/><img src='/portfolio/images/photinusPyralis_vs_photinusCorrusca.JPG'>"
 collection: portfolio
 ---
-<a href='/portfolio/qgis2web_2023_05_13-12_15_24_869504/index.html' target='_blank'>Access html file</a>
+<a href='/portfolio/qgis2web_2023_05_19-22_13_43_652085/index.html' target='_blank'>Access html file</a>
 
-Description of project workflow.
+Using the GBIF Occurences Plug-in for QGIS, I queried on all iNaturalist, research-grade firefly(genus <i>Photinus</i>) observations in the United States.
+The observations were converted from a shapefile to a GeoJSON.
+Each species was queried by specific epithet. I chose to use two species to highlight the capabilities of the qgis2web plug-in;
+<i>Photinus pyralis</i>, also known as the Common Eastern Firefly, and <i>Photinus corrusca</i> (or <i>Ellychnia corrusca</i>), also known as the Winter Firefly.
+These two species were observed far more frequently than any others in the United States.
+
+Their distributions are shown in purple (<i>P. pyralis</i>) and orange (<i>P. corrusca</i>) against the CartoDB Dark Matter basemap for emphasis.
+
+<strong>Limitations of the qgis2web plug-in:</strong>
+One major limitation of the plug-in is the inability to render multiple symbology categories within a single layer.
+This is why I created copies of the firefly observations point layer and queried upon each species, creating separate layers for each.
+
+
