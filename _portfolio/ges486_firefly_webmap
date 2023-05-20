@@ -5,7 +5,7 @@ excerpt: "A basic web map generated using the qgis2web plug-in
 collection: portfolio
 ---
 
-<a href='/portfolio/qgis2web_2023_05_19-22_13_43_652085/index.html'></a>
+<iframe src='/portfolio/qgis2web_2023_05_19-22_13_43_652085/index.html'></iframe>
 
 <p>Using the GBIF Occurences Plug-in for QGIS, I queried on all iNaturalist, research-grade firefly(genus <i>Photinus</i>) observations in the United States.
 The observations were converted from a shapefile to a GeoJSON.<br>
