@@ -4,18 +4,20 @@ excerpt: "A basic web map generated using the qgis2web plug-in
  <br/><img src='/portfolio/images/photinusPyralis_vs_photinusCorrusca.JPG'>"
 collection: portfolio
 ---
-<a href='/portfolio/qgis2web_2023_05_19-22_13_43_652085/index.html' target='_blank'>Access html file</a>
 
-Using the GBIF Occurences Plug-in for QGIS, I queried on all iNaturalist, research-grade firefly(genus <i>Photinus</i>) observations in the United States.
-The observations were converted from a shapefile to a GeoJSON.
+<a href='/portfolio/qgis2web_2023_05_19-22_13_43_652085/index.html'></a>
+
+<p>Using the GBIF Occurences Plug-in for QGIS, I queried on all iNaturalist, research-grade firefly(genus <i>Photinus</i>) observations in the United States.
+The observations were converted from a shapefile to a GeoJSON.<br>
 Each species was queried by specific epithet. I chose to use two species to highlight the capabilities of the qgis2web plug-in;
 <i>Photinus pyralis</i>, also known as the Common Eastern Firefly, and <i>Photinus corrusca</i> (or <i>Ellychnia corrusca</i>), also known as the Winter Firefly.
-These two species were observed far more frequently than any others in the United States.
+These two species were observed far more frequently than any others in the United States.</p>
 
-Their distributions are shown in purple (<i>P. pyralis</i>) and orange (<i>P. corrusca</i>) against the CartoDB Dark Matter basemap for emphasis.
+<p>Their distributions are shown in purple (<i>P. pyralis</i>) and orange (<i>P. corrusca</i>) against the CartoDB Dark Matter basemap for emphasis.</p>
 
-<strong>Limitations of the qgis2web plug-in:</strong>
-One major limitation of the plug-in is the inability to render multiple symbology categories within a single layer.
-This is why I created copies of the firefly observations point layer and queried upon each species, creating separate layers for each.
+<p><strong>Limitations of the qgis2web plug-in:</strong>
+One major limitation of the plug-in is the inability to render multiple symbology categories within a single layer. You can read more about this limitation
+<a href='https://github.com/tomchadwin/qgis2web/issues/821' target='_blank'>here</a>
+This is why I created copies of the firefly observations point layer and queried upon each species, creating separate layers for each.</p>
 
 
