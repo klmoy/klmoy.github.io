@@ -10,3 +10,4 @@ collection: portfolio
 Description of project workflow.
 
 <img src='/portfolio/images/ges675_finalproj_screenshot2.JPG'>
+![collegetown affordability web app](/images/ges675_finalproj_screenshot2.JPG "collegetown affordability web app")
