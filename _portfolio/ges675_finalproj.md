@@ -8,3 +8,5 @@ collection: portfolio
 <a href='/ges675_finalproj/index.html' target='blank'>Click to go to the web app</a>
 
 Description of project workflow.
+
+<img src='/portfolio/images/ges675_finalproj_screenshot2.JPG'>
