@@ -5,8 +5,11 @@ excerpt: "A basic web application that utilizes the ArcGIS JavaScript API
 collection: portfolio
 ---
 
+Description of project workflow.
+
+
 <a href='/ges675_finalproj/index.html' target='blank'>Click to go to the web app</a>
 
-Description of project workflow.
+
 
 ![collegetown affordability web app](/images/ges675_finalproj_screenshot2.JPG "collegetown affordability web app")
