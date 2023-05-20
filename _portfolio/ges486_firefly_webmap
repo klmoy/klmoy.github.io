@@ -1,13 +1,13 @@
 ---
 title: "Advanced GIS - QGIS 2 WebMap"
-excerpt: "A basic web map generated using the qgis2web plug-in
- <br/><img src='/portfolio/images/photinusPyralis_vs_photinusCorrusca.JPG'>"
+excerpt: "A basic web map generated using the qgis2web plug-in<br/><img src='/portfolio/images/photinusPyralis_vs_photinusCorrusca.JPG'>"
 collection: portfolio
 ---
 
-<iframe src='/portfolio/qgis2web_2023_05_19-22_13_43_652085/index.html' height="500" width="500"></iframe>
+<iframe src='/portfolio/qgis2web_2023_05_19-22_13_43_652085/index.html' height=50% width=50%></iframe>
 
-<p>Using the GBIF Occurences Plug-in for QGIS, I queried on all iNaturalist, research-grade firefly(genus <i>Photinus</i>) observations in the United States.
+<p>Using the <a href='https://www.gbif.org/what-is-gbif' target='_blank'>GBIF</a> Occurences Plug-in for QGIS, I queried on all <a href='https://inaturalist.org' target='_blank'>iNaturalist</a>, 
+research-grade firefly(genus <i>Photinus</i>) observations in the United States.
 The observations were converted from a shapefile to a GeoJSON.<br>
 Each species was queried by specific epithet. I chose to use two species to highlight the capabilities of the qgis2web plug-in;
 <i>Photinus pyralis</i>, also known as the Common Eastern Firefly, and <i>Photinus corrusca</i> (or <i>Ellychnia corrusca</i>), also known as the Winter Firefly.
