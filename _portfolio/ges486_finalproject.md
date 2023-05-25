@@ -17,7 +17,7 @@ Chemical release data is publically available <a href='https://www.epa.gov/toxic
   <h2>Analysis</h2>
 Before doing a statistical analysis I plotted the point data from the TRI and Stream Waders. Below, you can see an example of this step.
 <br>
-![Maryland TRI sites in 2010](/images/TRI_points_2010.JPG "Maryland TRI sites in 2010") ![Maryland Stream Survey Sites in 2010](/images/CBI_2010.JPG "Maryland Stream Survey Sites in 2010")
+![Maryland TRI sites in 2010](/portfolio/images/TRI_points_2010.JPG "Maryland TRI sites in 2010") ![Maryland Stream Survey Sites in 2010](/portfolio/images/CBI_2010.JPG "Maryland Stream Survey Sites in 2010")
 
   
 I first did a statistical analysis using planar point patterns and the Kolomogrov-Smirnov test to check the distrbution of the data. This involved alot of changing the format of the data. To map the relationship, I created density estimates of the total number of chemical waste releases by creating release counts per county area. Then, I plotted stream health data taken at designated sample sites on top of the densities. I used Maryland as my sample area, but data stream health and TRI site data are available for all states. In addition to my interest in the relationship between stream health and the presense of industrial facilities, I was also curious about these patterns over time, so I repeated the whole process three times for three different years of data (2000, 2010, 2017).  
