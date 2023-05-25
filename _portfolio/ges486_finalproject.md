@@ -1,6 +1,6 @@
 ---
 title: "Advanced Applications of GIS - Final Project"
-excerpt: "An exploratory analysis of EPA TRI sites and stream health in Maryland<br/><img src='/images/tri_kde_2010.JPG'>"
+excerpt: "An exploratory analysis of EPA TRI sites and stream health in Maryland<br/><a href='https://klmoy.github.io/portfolio/ges486_finalproject/'><img src='/images/tri_kde_2010.JPG'></a>"
 collection: portfolio
 ---
 
