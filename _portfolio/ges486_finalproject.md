@@ -1,4 +1,3 @@
-
 ---
 title: "Advanced Applications of GIS - Final Project"
 excerpt: "An exploratory analysis of EPA TRI sites and stream health in Maryland<br/><img src='/images/tri_kde_2010.JPG'>"
