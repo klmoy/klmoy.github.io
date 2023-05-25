@@ -1,0 +1,546 @@
+---
+title: "Comparing Stream Health and TRI Sites in Maryland"
+author: "Kari Moy"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Final Project Documentation
+
+This an exploratory analysis of TRI site data in comparison to stream health surveys in Maryland from 2000-2017.
+
+## Check out TRI data for Maryland
+
+Before getting too far into the woods, I want to get some snap shots of how TRI site locations have changed over time. Instead of checking the data for every year, I'll first check out the years 2000, 2010, and 2017.
+
+```{r, setup, warning=FALSE, message=FALSE, echo=TRUE, results='hide'}
+
+library(tidyverse)
+library(sf)
+library(spatstat.utils)
+library(spatstat.explore)
+library(spatstat.geom)
+library(tidycensus)
+library(tmap)
+library(stars)
+library(tigris)
+options(tigris_use_cache = TRUE)
+
+# Read in MD TRI data.
+TRI.2000 <- read.csv("../data/TRI_reports/2000_md.csv")
+TRI.2010 <- read.csv("../data/TRI_reports/2010_md.csv")
+TRI.2017 <- read.csv("../data/TRI_reports/2017_md.csv")
+
+# Convert into multipoint sf.
+# For coordinates, enter longitude THEN latitude!
+# The CRS for the dataframe is located in $HORIZONTAL.DATUM.
+TRI.2000_sf <- st_as_sf(TRI.2000, coords = c("LONGITUDE", "LATITUDE"), crs = "NAD83")
+
+TRI.2010_sf <- st_as_sf(TRI.2010, coords = c("LONGITUDE", "LATITUDE"), crs = "NAD83")
+
+TRI.2017_sf <- st_as_sf(TRI.2017, coords = c("LONGITUDE", "LATITUDE"), crs = "NAD83")
+
+# Transform from native CRS to Web Mercator/Albers Equal Area (3857).
+TRI.2000_web <- st_transform(TRI.2000_sf, crs = 3857)
+TRI.2010_web <- st_transform(TRI.2010_sf, crs = 3857)
+TRI.2017_web <- st_transform(TRI.2017_sf, crs = 3857)
+
+# Confirm transformation.
+st_crs(TRI.2000_web)
+st_crs(TRI.2010_web)
+st_crs(TRI.2017_web)
+
+# Save copies of sf.
+#st_write(TRI.2000_web, "../results/TRI_2000.geojson")
+#st_write(TRI.2010_web, "../results/TRI_2010.geojson")
+#st_write(TRI.2017_web, "../results/TRI_2017.geojson")
+
+```
+
+I'll download a few different levels of border geometries in Maryland, so I can test what scale works best for TRI site density visualization later on.
+
+```{r fetch-MD-geometries}
+# Use tidycensus to get MD county boundary.
+MD <- get_acs(
+  geography = "county", 
+  variables = c(total_pop = "B01003_001"), 
+  year=2018, 
+  state = "MD", 
+  geometry = TRUE)
+
+# Transform from native CRS to Web Mercator/Albers Equal Area (3857). 
+MD_web <- st_transform(MD, crs = 3857)
+# Confirm that the CRS of the tidycensus sf matches the TRI sf.
+st_crs(MD_web)
+
+# Save copy locally.
+#st_write(MD_web, "../results/MD_boundary.geojson")
+
+# Fetch census tract boundaries.
+MD_tracts <- get_acs(
+  geography = "tract",
+  variables = c(total_pop = "B01003_001"), 
+  year=2018, 
+  state = "MD", 
+  geometry = TRUE)
+
+# Transform from native CRS to Web Mercator/Albers Equal Area (3857). 
+MD_tracts_web <- st_transform(MD_tracts, crs = 3857)
+
+# Save copy locally.
+#st_write(MD_tracts, "../results/MD_tracts.geojson")
+
+# Fet block group boundaries.
+MD_blocks_groups <- block_groups("MD")
+
+# Transform from native CRS to Web Mercator/Albers Equal Area (3857). 
+MD_blocks_groups <- st_transform(MD_blocks_groups, crs = 3857)
+# Save copy locally.
+#st_write(MD_blocks_groups, "../results/MD_blocks_groups.geojson")
+```
+
+Make some initial plots.
+
+```{r explore-TRI}
+
+# Subset TRI data down to the points that fall within the Maryland state boundaries.
+TRI.2000_points <- st_intersection(TRI.2000_web, MD_web)
+TRI.2010_points <- st_intersection(TRI.2010_web, MD_web)
+TRI.2017_points <- st_intersection(TRI.2017_web, MD_web)
+
+# Plot 2000
+# Plot state boundary
+TRI.2000_plot <- tm_shape(MD_web) +
+  tm_polygons(col = "white",
+              border.col = "grey") +
+# Add TRI points
+  tm_shape(TRI.2000_points) +
+  tm_dots(size = .15, 
+          shape = 21, 
+          col = "darkblue",
+          border.col = "black",
+          alpha = .25) +
+  tm_layout(main.title = "Maryland 2000 TRI Sites",
+            frame = FALSE,
+            legend.outside = TRUE)
+
+TRI.2000_plot
+
+# Plot 2010
+# Plot state boundary
+TRI.2010_plot <- tm_shape(MD_web) +
+  tm_polygons(col = "white",
+              border.col = "grey") +
+# Add TRI points
+  tm_shape(TRI.2010_points) +
+  tm_dots(size = .15, 
+          shape = 21, 
+          col = "darkblue",
+          border.col = "black",
+          alpha = .25) +
+  tm_layout(main.title = "Maryland 2010 TRI Sites",
+            frame = FALSE,
+            legend.outside = TRUE)
+
+TRI.2010_plot
+
+# Plot 2017
+# Plot state boundary
+TRI.2017_plot <- tm_shape(MD_web) +
+  tm_polygons(col = "white",
+              border.col = "grey") +
+# Add TRI points
+  tm_shape(TRI.2017_points) +
+  tm_dots(size = .15, 
+          shape = 21, 
+          col = "darkblue",
+          border.col = "black",
+          alpha = .25) +
+  tm_layout(main.title = "Maryland 2000 TRI Sites",
+            frame = FALSE,
+            legend.outside = TRUE)
+
+TRI.2017_plot
+
+
+```
+
+### Distribution of TRI Sites in MD -- Initial Observations:
+
+There is a central corridor of TRI sites that follows Interstate highway 95, with the largest cluster in the state centering on the Baltimore Inner Harbor. This trend is pretty consistent over time, but it has seemed to improve since 2000.
+
+## Create intensity plots using spatstat package
+
+Set-up for using `spatstat` to analyze your point data. Remember `spatstat` stores spatial data a bit differently than the `sf` package but it's fairly easy to transform data between `sf` objects and the `ppp` and `owin` objects used in spatstat. Also remember that we need to project data before using `spatstat` to conduct a point pattern analysis.
+
+```{r spatstat-setup}
+
+# Transform our boundary to an owin: spatial region or observation window.
+MD_owin <- as.owin(MD_web)
+
+# Transfrom TRI site locations to a ppp: planar point pattern.
+TRI.2000_ppp  <- as.ppp(TRI.2000_points)
+TRI.2010_ppp  <- as.ppp(TRI.2010_points)
+TRI.2017_ppp  <- as.ppp(TRI.2017_points)
+
+# Now we can define the obervation window for the ppp.
+Window(TRI.2000_ppp) <- MD_owin
+Window(TRI.2010_ppp) <- MD_owin
+Window(TRI.2017_ppp) <- MD_owin
+
+# Notice when you plot TRI_mi_ppp it now displayes both the points and the county boundary.  
+plot(TRI.2000_ppp, main = "Maryland TRI Site PPP (2000)")
+plot(TRI.2010_ppp, main = "Maryland TRI Site PPP (2010)")
+plot(TRI.2017_ppp, main = "Maryland TRI Site PPP (2017)")
+
+# Check for duplicates in data.
+any(duplicated(st_geometry(TRI.2000_points)))
+any(duplicated(st_geometry(TRI.2010_points)))
+any(duplicated(st_geometry(TRI.2017_points)))
+# Returned TRUE; remove duplicates.
+TRI.2000_ppp <- unique(TRI.2000_ppp)
+TRI.2010_ppp <- unique(TRI.2010_ppp)
+TRI.2017_ppp <- unique(TRI.2017_ppp)
+
+# Rescale from meters to kilometers.
+TRI.2000_ppp.km <- rescale(TRI.2000_ppp, 1000, "km")
+TRI.2010_ppp.km <- rescale(TRI.2010_ppp, 1000, "km")
+TRI.2017_ppp.km <- rescale(TRI.2017_ppp, 1000, "km")
+
+# Calculate density per 2000 square kilometers.
+ds.2000.km <- nrow(TRI.2000_web)/2000
+print(paste("The density of TRI sites in 2000 was:", ds.2000.km))
+
+ds.2010.km <- nrow(TRI.2010_web)/2000
+print(paste("The density of TRI sites in 2010 was:", ds.2010.km))
+
+ds.2017.km <- nrow(TRI.2017_web)/2000
+print(paste("The density of TRI sites in 2017 was:", ds.2017.km))
+```
+
+### PPP Analysis
+
+Create a quadrat grid for the TRI sites in Maryland for each year in order to standardize the number of points per area. Then, create plots of the TRI sites on top of the quadrat grid in order to visualize the cells with the greatest number of TRI sites. Depending on the results, reassess the cell size of the quadrat grid.
+
+```{r ppp-quadrats}
+
+# Compute the number of TRI sites per 2000 square kilometer grid cell (in counts per km2).
+# Number of Rows  = (Total Area of Maryland/ Area of each cell)^0.5
+# (32,134/2000)^0.5 ~ 16 rows
+Q.2000.km <- quadratcount(TRI.2000_ppp.km, nx= 16, ny=16)
+Q.2010.km <- quadratcount(TRI.2010_ppp.km, nx= 16, ny=16)
+Q.2017.km <- quadratcount(TRI.2017_ppp.km, nx= 16, ny=16)
+# Compute the density for each quadrat. The output of this function is a raster.
+Q_ds.2000.km <- intensity(Q.2000.km)
+Q_ds.2010.km <- intensity(Q.2010.km)
+Q_ds.2017.km <- intensity(Q.2017.km)
+
+# Plot the quadrat grids
+plot(TRI.2000_ppp.km, pch=20, cols="grey70", main= "Number of TRI sites per quadrat")  # Plot points
+plot(Q.2000.km, add=TRUE)  # Add quadrat grid
+
+plot(TRI.2010_ppp.km, pch=20, cols="grey70", main= "Number of TRI sites per quadrat")  # Plot points
+plot(Q.2010.km, add=TRUE)  # Add quadrat grid
+
+plot(TRI.2017_ppp.km, pch=20, cols="grey70", main= "Number of TRI sites per quadrat")  # Plot points
+plot(Q.2017.km, add=TRUE)  # Add quadrat grid
+
+```
+
+Now that I'm satisfied with the resultant quadrat plots, I'll move on the plot the TRI site PPP density for each year. This will allow me to better visualize the spatial patterns in the distribution of TRI site densities.
+
+```{r plot-intensities}
+
+# Plot the density
+plot(intensity(Q.2000.km, image=TRUE), main= "PPP Intensity Overlay (2000)", las=1)  # Plot density raster
+plot(TRI.2000_ppp.km, pch=20, cex=0.6, col=rgb(0,0,0,.5), add=TRUE)  # Add points
+
+# Plot the density
+plot(intensity(Q.2010.km, image=TRUE), main= "PPP Intensity Overlay (2010)", las=1)  # Plot density raster
+plot(TRI.2010_ppp.km, pch=20, cex=0.6, col=rgb(0,0,0,.5), add=TRUE)  # Add points
+
+# Plot the density
+plot(intensity(Q.2017.km, image=TRUE), main= "PPP Intensity Overlay (2017)", las=1)  # Plot density raster
+plot(TRI.2017_ppp.km, pch=20, cex=0.6, col=rgb(0,0,0,.5), add=TRUE)  # Add points
+
+```
+
+The final step in visualizing the TRI site density distributions is to create a kernel density estimation for each year which will create a continuous density surface for the entire state.
+
+```{r kernel-density-estimations}
+# Estimate a continuous TRI site density surface for Maryland.
+# Create a kernel density estimation.
+kde.2000.km <- density.ppp(TRI.2000_ppp.km)
+kde.2010.km <- density.ppp(TRI.2010_ppp.km)
+kde.2017.km <- density.ppp(TRI.2017_ppp.km)
+
+# Plot the kernel density estimations.
+plot(kde.2000.km , main = "KDE TRI Sites in Maryland (2000)")
+contour(kde.2000.km , add=TRUE) #adds contours to the density surface showing the number of points/area
+
+plot(kde.2010.km, main = "KDE TRI Sites in Maryland (2010)")
+contour(kde.2010.km, add=TRUE) #adds contours to the density surface showing the number of points/area
+
+plot(kde.2017.km, main = "KDE TRI Sites in Maryland (2017)")
+contour(kde.2017.km, add=TRUE) #adds contours to the density surface showing the number of points/area
+
+# Adjust sigma in order to fine tune kernel density estimation.
+kde.2000.10km <- density.ppp(TRI.2000_ppp.km, sigma=10) # Using a 5km bandwidth
+kde.2010.10km <- density.ppp(TRI.2010_ppp.km, sigma=10) 
+kde.2017.10km <- density.ppp(TRI.2017_ppp.km, sigma=10) 
+
+# Create plots with 5km bandwidth KDE.
+kde.2000_plot <- plot(kde.2000.10km, main= "KDE TRI sites in Maryland (2000)\nBandwidth = 10 km", las=1)
+contour(kde.2000.10km, add=TRUE)
+
+plot(kde.2010.10km, main= "KDE TRI sites in Maryland (2010)\nBandwidth = 10 km", las=1)
+contour(kde.2010.10km, add=TRUE)
+
+plot(kde.2017.10km, main= "KDE TRI sites in Maryland (2017)\nBandwidth = 10 km", las=1)
+contour(kde.2017.10km, add=TRUE)
+```
+
+### Findings from PPP Analysis:
+
+The density of TRI sites in Maryland has been decreasing over time, but the distribution of the Baltimore hotspot has expanded/dispersed over time. The default bandwidth used to compute the kernal density estimations, which is equal to the standard deviation of the isotropic smoothing kernel, was too large to visualize any meaningful patterns. Therefore, I decreased the bandwidth until I felt like the scale of the intensity smoothing made sense. My thinking here is that the main hotspot of TRI sites is located around Baltimore City, which has a greater number of facilities per square kilometer.
+
+## 
+
+## Statistical Analysis:
+
+### Test for Random Distribution
+
+Based on the heterogeneous spatial pattern of TRI site locations in the state of Maryland, *my* hypothesis is that TRI sites are not randomly distributed.I will use the Kolmogorov-Smirnov (ks) test to determine whether the distributions of TRI site locations follow an expected pattern of complete spatial randomness (CSR). The null hypothesis of the ks test is that the observed and the expected have the same distribution.The ks test returns a D-statistic which represents the maximum distance between the distribution of the observed and the expected. If the D-statistic is below the critical value and the p-value is statistically significant p-value (p \< 0.05), then the hypothesis is accepted, meaning that there is a 95% chance that the distribution of TRI site locations is not random. I will also use the ks test to elucidate if the distribution of TRI site intensity (density) is due randomness, or not.
+
+```{r compute-ks}
+
+# Perform Kolmogorov-Smirnov test on Maryland TRI ppp for each year, using the x-coordinate as a covariate.
+ks.2000 <- cdf.test(TRI.2000_ppp, "x")
+ks.2010 <- cdf.test(TRI.2010_ppp, "x")
+ks.2017 <- cdf.test(TRI.2017_ppp, "x")
+
+# Plot relationship.
+plot.cdftest(ks.2000)
+plot.cdftest(ks.2010)
+plot.cdftest(ks.2017)
+```
+
+**Kolmogorov-Smirnov Test Results:**
+
+In all three years, the ks test reported p-values well below the threshold for statistical significance. However, visually the difference between the distances of the expected and the observed distributions TRI site locations is relatively small. Because of closeness between the two distributions I will check the D-statistics against a [table of critical values of the D distribution](http://www.matf.bg.ac.rs/p/files/69-%5BMichael_J_Panik%5D_Advanced_Statistics_from_an_Elem(b-ok.xyz)-776-779.pdf "table of critical values of the D distribution"). Table 1 shows the results of the ks test for each year examined. The results from the ks test concluded that the alternative hypothesis was two-sided, therefore the ks test hypothesis that the distribution of TRI site locations in Maryland follows the assumptions of complete spatial randomness is rejected.
+
+**Table 1:** KS Test Results - TRI Site Locations
+
+| Year | n (\# of observations) |     D- statistic      |       P-value       |
+|:----:|:----------------------:|:---------------------:|:-------------------:|
+| 2000 |          791           | `r ks.2000$statistic` | `r ks.2000$p.value` |
+| 2010 |          660           | `r ks.2010$statistic` | `r ks.2010$p.value` |
+| 2017 |          544           | `r ks.2017$statistic` | `r ks.2017$p.value` |
+
+Next, I want to investigate the distribution of TRI site densities.
+
+```{r compute-ks-densities}
+
+# Calculate kernel densities of TRI sites in Maryland for each year (in meters).
+kde.2000.m <- density.ppp(TRI.2000_ppp)
+kde.2010.m <- density.ppp(TRI.2010_ppp)
+kde.2017.m <- density.ppp(TRI.2017_ppp)
+
+# Perform Kolmogorov-Smirnov test on densities of Maryland TRI ppp for each year.
+ks_kde.2000<- cdf.test(TRI.2000_ppp, kde.2000.m)
+ks_kde.2010<- cdf.test(TRI.2010_ppp, kde.2010.m)
+ks_kde.2017<- cdf.test(TRI.2017_ppp, kde.2017.m)
+
+# Plot relationship. 
+plot.cdftest(ks_kde.2000)
+plot.cdftest(ks_kde.2010)
+plot.cdftest(ks_kde.2017)
+```
+
+The ks test resulted in higher D-statistics for the densities than the site locations, meaning that the observed distributions of densities was more dissimilar to the expected distributions and less closely resemble complete spatial randomness. The results in Table 2 indicate the rejection of the ks test null hypothesis for all three years, so the distribution of densities is not spatially random.
+
+**Table 2:** KS Test Results - TRI Site Densities
+
+| Year | n (\# of observations) |        D-statistic        |         P-value         |
+|:----------------:|:----------------:|:----------------:|:----------------:|
+| 2000 |          791           | `r ks_kde.2000$statistic` | `r ks_kde.2000$p.value` |
+| 2010 |          660           | `r ks_kde.2010$statistic` | `r ks_kde.2010$p.value` |
+| 2017 |          544           | `r ks_kde.2017$statistic` | `r ks_kde.2017$p.value` |
+
+In conclusion, the locations and densities of TRI site locations in the years 2000, 2010, and 2017 are not random. Their distributions are spatially dependent on some unknown variables. I assume one variable leading to the distribution of TRI sites are the zoning restrictions on industrial facilities. This could be further explored using planning development data.
+
+### Test for clustered distribution
+
+Use the G function to measure the distribution of distances from an arbitrary point to its nearest point, in order to assess the magnitude to which the empirical distribution of the TRI data is different from the theoretical CSR expectation.
+
+```{r f-test}
+
+# Compute g-test and plot
+gtest.2000 <- Gest(TRI.2000_ppp)
+gtest.2000
+plot(gtest.2000)
+
+gtest.2010 <- Gest(TRI.2010_ppp)
+gtest.2010
+plot(gtest.2010)
+
+gtest <- Gest(TRI.2017_ppp)
+gtest
+plot(gtest)
+```
+
+For all values of r the empirical function is greater than the theoretical Poisson function, until a distance of about 1000. Around 1000, the theoretical function begins to surpass the empirical functions in the following order: border corrected estimate, Kaplan-Meier estimate, and finally with Hanisch estimate. This suggests that nearest neighbor distances in the pint pattern are shorter than that of the theoretical Poisson process, up until the 10000 distance threshold. So, the pattern is clustered until a certain distance.
+
+A similar pattern resulted for the TRI data from 2010, but the threshold r distance is about 11750. The pattern hold for the 2017 data, but the cross occurs around 13000. This suggests that the data became more clustered over time.
+
+## PPP Covariate Analysis:
+
+I'm interested in understanding the relationship between stream health and the presence of TRI sites. I will use the combined index of biological integrity (CBI) as my covariate. These data are stored in the Maryland Stream Health - Stream Wader Sites volunteer collected layer.
+
+```{r prep-covariate-data}
+
+# Read in Stream Waders csv.
+stream_health <-st_read("../data/Maryland_Stream_Health_-_Stream_Wader_Sites_volunteer_collected.geojson")
+
+# Reproject data to match TRI site data.
+stream_health <- sf::st_transform(stream_health, 3857)
+
+# Write local copy.
+#st_write(stream_health_sf, "../results/stream_health.geojson")
+
+# Create a subset of stream health sites within Census Bureau defined state boundary.
+stream_health<- sf::st_intersection(stream_health, MD_web) 
+
+# Visualize stream health of sites in Maryland.
+# Add MD border layer
+stream_health_sites <- tm_shape(MD_web) +
+  tm_polygons(col = "white",
+              border.col = "grey") +
+# Add stream health points
+  tm_shape(stream_health) +
+  tm_dots(size = .15, 
+          shape = 21, 
+          col = "CBI",
+          border.col = "black",
+          alpha = .25) +
+  tm_layout(main.title = "Maryland Stream Health Surveys",
+            frame = FALSE,
+            legend.outside = TRUE)
+
+stream_health_sites
+
+# Create CBI subsets for 2000, 2010, and 2017
+CBI.2000 <- stream_health %>%
+  filter(YEAR_ == 2000)
+CBI.2010 <- stream_health %>%
+  filter(YEAR_ == 2010)
+CBI.2017 <- stream_health %>%
+  filter(YEAR_ == 2017)
+
+# Convert stream health surveys to just CBI 1000x1000 cell raster grid.
+CBI.2000_ras <- stars::st_rasterize(CBI.2000, dx = 1000, dy = 1000) 
+CBI.2010_ras <- stars::st_rasterize(CBI.2010, dx = 1000, dy = 1000) 
+CBI.2017_ras <- stars::st_rasterize(CBI.2017, dx = 1000, dy = 1000) 
+
+# Export the raster image. 
+stars::write_stars(CBI.2000_ras, "../data/CBI.2000.tif") 
+stars::write_stars(CBI.2010_ras, "../data/CBI.2010.tif") 
+stars::write_stars(CBI.2017_ras, "../data/CBI.2017.tif") 
+
+# read in the raster .tif 
+CBI.2000_ras <- raster::raster("../data/CBI.2000.tif")
+CBI.2010_ras <- raster::raster("../data/CBI.2010.tif")
+CBI.2017_ras <- raster::raster("../data/CBI.2017.tif")
+
+# Use maptools to convert the raster object to an im object (how spatstat stores rasters).
+CBI.2000_im <- maptools::as.im.RasterLayer(CBI.2000_ras) 
+CBI.2010_im <- maptools::as.im.RasterLayer(CBI.2010_ras) 
+CBI.2017_im <- maptools::as.im.RasterLayer(CBI.2017_ras) 
+```
+
+Test the relationship between TRI site locations and stream health by applying the Kologorov-Smirnov test using CBI as a covariate.
+
+```{r covariate-ks}
+
+# Run a Kolmogorov-Smirnov test
+ks_TRI_CBI.2000 <- cdf.test(TRI.2000_ppp, CBI.2000_im)
+plot(ks_TRI_CBI.2000)
+print(ks_TRI_CBI.2000)
+
+ks_TRI_CBI.2010 <- cdf.test(TRI.2010_ppp, CBI.2010_im)
+plot(ks_TRI_CBI.2010)
+print(ks_TRI_CBI.2010)
+
+ks_TRI_CBI.2017 <- cdf.test(TRI.2017_ppp, CBI.2017_im)
+plot(ks_TRI_CBI.2017)
+print(ks_TRI_CBI.2017)
+```
+
+The results of the KS test using stream health CBI as a covariate suggests that the relationship between stream health and TRI site locations is not random for all three and the p-values: being so close to zero suggests that these relationships are significant.
+
+### Plot TRI sites and CBI
+
+```{r prep-for-plots}
+
+# Join TRI points with census tracts
+TRI_joined.2000 <- st_join(MD_web, TRI.2000_points
+)
+TRI_joined.2010 <- st_join(MD_web, TRI.2010_points
+)
+TRI_joined.2017 <- st_join(MD_web, TRI.2017_points
+)
+
+# Create 5 CBI brackets for the combined biotic index.
+CBI_break <- classInt::classIntervals(stream_health$CBI, n = 5, style = "fixed", fixedBreaks = c(0, 1, 2, 3, 4, 5))
+
+# Create 5 TRI brackets for the total number of releases.
+# Use results from summary stats for intervals.
+summary(TRI.2000_points$RELEASES)
+TRI_break.2000 <- classInt::classIntervals(TRI_joined.2000$RELEASES, n = 5, style = "fixed", fixedBreaks = c(0, 250, 5000, 60000, 5500000, 11000000))
+
+summary(TRI.2010_points$RELEASES)
+TRI_break.2010 <- classInt::classIntervals(TRI_joined.2010$RELEASES, n = 5, style = "fixed", fixedBreaks = c(0, 50, 2500, 20000, 7600000, 1500000))
+
+summary(TRI.2017_points$RELEASES)
+TRI_break.2017 <- classInt::classIntervals(TRI_joined.2017$RELEASES, n = 5, style = "fixed", fixedBreaks = c(0, 25, 900, 10000, 355000, 700000))
+
+```
+
+## Create interactive plots
+
+Finally, I'll create interactive plots using the tmap package by setting `tmap_mode()` to "view". Each plot has a the filtered CBI stream survey layer overlaid on the TRI site densities per county for their respective years.
+
+```{r TRI-per-tract}
+
+# Set tmap mode to interactive viewing.
+tmap_mode('view')
+
+# Create interactive map with layer attribute popup.
+  tm_shape(TRI_joined.2000) +
+    tm_polygons(col = "RELEASES", title = "Total Releases in 2000", breaks = TRI_break.2000$brks) +
+  tm_shape(CBI.2000) +
+    tm_dots(col = "CBI", title = "Stream Health", breaks = CBI_break$brks, palette = "RdYlGn") +
+  tm_layout(main.title = "Maryland 2000 CBI and TRI site density per county",
+            frame = TRUE,
+            legend.outside = TRUE)
+  
+  tm_shape(TRI_joined.2010) +
+    tm_polygons(col = "RELEASES", title = "Total Releases in 2010", breaks = TRI_break.2010$brks) +
+  tm_shape(CBI.2010) +
+    tm_dots(col = "CBI", title = "Stream Health", breaks = CBI_break$brks, palette = "RdYlGn") +
+  tm_layout(main.title = "Maryland 2010 CBI and TRI site density per county",
+            frame = TRUE,
+            legend.outside = TRUE)
+    
+      tm_shape(TRI_joined.2017) +
+    tm_polygons(col = "RELEASES", title = "Total Releases in 2017", breaks = TRI_break.2017$brks) +
+  tm_shape(CBI.2017) +
+    tm_dots(col = "CBI", title = "Stream Health", breaks = CBI_break$brks, palette = "RdYlGn") +
+  tm_layout(main.title = "Maryland 2017 CBI and TRI site density per county",
+            main.title.position = "center",
+            frame = TRUE,
+            legend.outside = TRUE)
+
+```
+
+According to these maps, stream health does not tell a very clear story. If they did, you would see more red and orange dots, representing poor stream health, in areas of darker orange (higher chemical releases). Perhaps aggregating the TRI data to smaller geographies would elucidate a clearer pattern, or perhaps doing a complete time series.
