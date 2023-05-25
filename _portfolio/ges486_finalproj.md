@@ -23,4 +23,4 @@ Below is an example of a interactive map I made in RStudio using the tmap packag
 
 
 
-![collegetown affordability web app](/images/ges675_finalproj_screenshot2.JPG "collegetown affordability web app")
+![stream health and TRI sites map](/images/interactive_map.JPG "stream health and TRI sites map")
