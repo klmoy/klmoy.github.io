@@ -1,4 +1,4 @@
-![interactive_map](https://github.com/klmoy/klmoy.github.io/assets/68968556/1f5d6eed-a83d-4293-8b5e-17a0451c0fe1)
+
 ---
 title: "Advanced Applications of GIS - Final Project"
 excerpt: "An exploratory analysis of EPA TRI sites and stream health in Maryland
@@ -22,4 +22,6 @@ Below is an example of a interactive map I made in RStudio using the tmap packag
 
 
 ![stream health and TRI sites map](/images/interactive_map.JPG "stream health and TRI sites map")
+
+![interactive_map](https://github.com/klmoy/klmoy.github.io/assets/68968556/1f5d6eed-a83d-4293-8b5e-17a0451c0fe1)
 
