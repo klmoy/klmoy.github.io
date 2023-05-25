@@ -1,6 +1,6 @@
 ---
 title: "Web Applications of GIS - Final Project"
-excerpt: "A basic web application that utilizes the ArcGIS JavaScript API <br> <a href="https://klmoy.github.io/portfolio/ges675_finalproj/" target="_blank"><img src='/portfolio/images/ges675_finalproj_screenshot.JPG'</a>"
+excerpt: "A basic web application that utilizes the ArcGIS JavaScript API <br> <a href="https://klmoy.github.io/portfolio/ges675_finalproj/"><img src='/portfolio/images/ges675_finalproj_screenshot.JPG'</a>"
 collection: portfolio
 ---
 
