@@ -20,5 +20,5 @@ What I found was that stream health may have a relationship with TRI site releas
 Below is an example of a interactive map I made in RStudio using the tmap package. When you hover over an county, the county ID pops up and you can click on the popup to see the total number of releases from TRI sites in that county. You can also select stream survey sites and see the exact CBI (combined biotic index). A CBI = 1 indicates poor stream health and a CBI = 5 indicates excellent stream health.
 
 
-![stream health and TRI sites map](/portfolio/images/interactive_map.JPG "stream health and TRI sites map")
+![stream health and TRI sites map](/images/interactive_map.JPG "stream health and TRI sites map")
 
