@@ -1,6 +1,6 @@
 ---
 title: "Advanced GIS - QGIS 2 WebMap"
-excerpt: "A basic web map generated using the qgis2web plug-in<br><a href='https://klmoy.github.io/portfolio/ges486_firefly_webmap/'<img src='/portfolio/images/photinusPyralis_vs_photinusCorrusca.JPG'></a>"
+excerpt: "A basic web map generated using the qgis2web plug-in<br><a href='https://klmoy.github.io/portfolio/ges486_firefly_webmap/'><img src='/portfolio/images/photinusPyralis_vs_photinusCorrusca.JPG'></a>"
 collection: portfolio
 ---
 <h2>Using the QGIS2Web Plug-in:</h2>
