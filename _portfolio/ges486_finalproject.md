@@ -17,7 +17,7 @@ collection: portfolio
 <h2>Analysis</h2>
 <p>Before doing a statistical analysis I plotted the point data from the TRI and Stream Waders. Below, you can see an example of this step.</p>
 
-<p>![Maryland TRI sites in 2010](/images/TRI_points_2010_500px.jpg "Maryland TRI sites in 2010") ![Maryland Stream Survey Sites in 2010](/images/CBI_2010_500px.jpg "Maryland Stream Survey Sites in 2010"</p>
+<p>![Maryland TRI sites in 2010](/portfolio/images/TRI_points_2010_500px.jpg "Maryland TRI sites in 2010") ![Maryland Stream Survey Sites in 2010](/portfolio/images/CBI_2010_500px.jpg "Maryland Stream Survey Sites in 2010"</p>
 
 <p>From quick comparison between these two plots, the relationship between stream health and number of chemical releases is not obvious. However, there are some overlaps between the locations that TRI sites and stream survey sites, which means that it is possible to do an analysis at the intersections of these datasets.</p>
 <br>
@@ -26,7 +26,7 @@ collection: portfolio
 
 <p>So, I looked at the point patterns of the TRI sites and used the <a href='https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test' target='_blank'>Kolomogrov-Smirnov (KS) test</a> to check for randomness. The KS test told me that the arrangement of TRI points was <i>not</i> random, but it didn't tell me <i>how</i> the points are arranged. So, to determine if the TRI sites were evenly dispersed or clustered in groups, I performed an <a href='https://en.wikipedia.org/wiki/G-test' target='_blank'>G-test</a>. The results from the G-test told me that TRI sites were arranged in clusters around the state of Maryland. Below you can see some of the different styles of plots I used to visualize the density of TRI site clusters around the state.</p>
 <br>
-<p>![TRI site points on quadrat grid](/images/TRI_density_2010.JPG "TRI site points on quadrat grid") ![TRI sites smoothed kernel density estimation](/images/tri_kde_2010.JPG "TRI sites smoothed kernel density estimation")</p>
+<p>![TRI site points on quadrat grid](/portfolio/images/TRI_density_2010.JPG "TRI site points on quadrat grid") ![TRI sites smoothed kernel density estimation](/portfolio/images/tri_kde_2010.JPG "TRI sites smoothed kernel density estimation")</p>
 <br>
 <p>After concluding that the TRI sites in Maryland were in a spatially clustered pattern, I repeated my statistical analysis but this time, I included stream health as a covariate (or variable contributing to the distribution). Thinking about this now, I realize that because my research question was if chemical releases affect stream health, stream health should have been my dependent variable and chemical releases should have been my independent variable. In short, I did my statistical analysis backwards. Oops, this is how you learn.</p>
 
