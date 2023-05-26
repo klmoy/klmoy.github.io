@@ -1,9 +1,10 @@
 ---
 title: "Creating a Small Multiple Map from Race & Ethnicity Data"
 excerpt: "A written report that aims to highlight the uses of the small multiples principle using COVId-19 data in NYC.
- <br/><img src='/images/small_multiples_500px.jpg'>"
+ <br><a href='https://klmoy.github.io/portfolio/ges600_map/'><img src='/images/small_multiples_500px.jpg'></a>"
 collection: portfolio
 ---
+<p>This report was written for Just Maps, an introduction to cartography course, at UMBC. The map products highlight the usefulness in using small multiple maps to communicate spatial patterns in data. The data used for this report sourced from the New York Times, Johns Hopkins, and U.S. Census Bureau</p>
 
 [Download paper here](https://github.com/klmoy/klmoy.github.io/blob/master/files/Moy_assignmentNine.pdf)
 
