@@ -20,7 +20,7 @@ These two species were observed far more frequently than any others in the Unite
 
 <h2>Limitations of the QGIS2Web plug-in:</h2>
 <p>One major limitation of the plug-in is the inability to render multiple symbology categories within a single layer. You can read more about this limitation
-<a href='https://github.com/tomchadwin/qgis2web/issues/821' target='_blank'>here</a>
+<a href='https://github.com/tomchadwin/qgis2web/issues/821' target='_blank'>here</a>.
 This is why I created copies of the firefly observations point layer and queried upon each species, creating separate layers for each.</p>
 
 
