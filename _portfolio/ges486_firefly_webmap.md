@@ -4,7 +4,7 @@ excerpt: "A basic web map generated using the qgis2web plug-in<br><a href='https
 collection: portfolio
 ---
 <h2>Using the QGIS2Web Plug-in:</h2>
-<p>The QGIS2Web plug-in is a great way to produce a simple webmap produce to showcase a map created in QGIS on a webpage. For directions on how to install a QGIS plug-in, click <a href='https://www.qgistutorials.com/en/docs/3/using_plugins.html' target='_blank'>here</a>. And here's the <a href='https://www.qgistutorials.com/en/docs/3/web_mapping_with_qgis2web.html' target='_blank'>tutorial</a> I used to learn how use the QGIS2Web plug-in.</p>
+<p>The QGIS2Web plug-in is a great way to produce a simple webmap to showcase a map created in QGIS on a webpage. For directions on how to install a QGIS plug-in, click <a href='https://www.qgistutorials.com/en/docs/3/using_plugins.html' target='_blank'>here</a>. And here's the <a href='https://www.qgistutorials.com/en/docs/3/web_mapping_with_qgis2web.html' target='_blank'>tutorial</a> I used to learn how use the QGIS2Web plug-in.</p>
 
 <p>Using the <a href='https://www.gbif.org/what-is-gbif' target='_blank'>GBIF</a> Occurences Plug-in for QGIS, I queried on all <a href='https://inaturalist.org' target='_blank'>iNaturalist</a>, 
 research-grade firefly(genus <i>Photinus</i>) observations in the United States.
