@@ -12,27 +12,38 @@ redirect_from:
 Education
 ======
 * B.S. in Ecology, Evolution, and Natural Resources, Rutgers University, 2016
-* M.P.S. in GIS, University of Baltimore County, 2024 (expected)
+* M.P.S. in GIS, University of Baltimore County, Spring 2025 (expected)
   
 Skills
 ======
-* R 
-* Python
-* GeoDa
-  * Cluster Analysis
-  * Regression Modeling
 * ArcGIS Online
+  * Dashboards
+  * Map Viewer
 * ArcGIS Pro
   * Data Manipulation
   * Spatial Analysis
   * Map layouts
+* GeoDa
+  * Cluster Analysis
+  * Regression Modeling
+* Google Suite Applications
+  * Docs
+  * Sheets
+  * Slides  
+* html
+* JavaScript
+  * ArcGIS JS API   
+* Microsoft Office
+  * Excel
+  * PowerPoint
+  * Word  
+*  Open Street Map
+* Python
 * QGIS
   * Data Manipulation
   * Spatial Analysis
   * Map layouts
-* html
-* JavaScript
-*   ArcGIS JS API
+* R
   
 Teaching
 ======
