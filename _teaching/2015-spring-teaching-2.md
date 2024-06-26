@@ -4,7 +4,7 @@ collection: teaching
 type: "Lab Course"
 permalink: /teaching/2015-spring-teaching-1
 venue: "UMBC, GES Department"
-date: 2023-09 - 2024-05
+date: 2023-09-01 - 2024-12-31
 location: "Baltimore, Maryland"
 ---
 
