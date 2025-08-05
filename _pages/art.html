@@ -6,38 +6,19 @@ author_profile: true
 ---
 
 {% include base_path %}
+{% capture written_label %}'None'{% endcapture %}
 
-
-{% for post in site.art %}
-  {% include archive-single.html %}
+{% for collection in site.art %}
+  {% unless collection.output == false or collection.label == "posts" %}
+    {% capture label %}{{ collection.label }}{% endcapture %}
+    {% if label != written_label %}
+      <h2 id="{{ label | slugify }}" class="archive__subtitle">{{ label }}</h2>
+      {% capture written_label %}{{ label }}{% endcapture %}
+    {% endif %}
+  {% endunless %}
+  {% for post in collection.docs %}
+    {% unless collection.output == false or collection.label == "posts" %}
+      {% include archive-single.html %}
+    {% endunless %}
+  {% endfor %}
 {% endfor %}
-
-<h2>Entomological Study - 2016</h2>
-<img src="/_art/km_magicicada_septendecim_25mb.jpg" alt="km_magicicada_septendecim">
-<img src="/_art/km_dynastes_tityus.jpg" alt="km_dynastes_tityus">
-<img src="/_art/km_beefly.png" alt="km_beefly">
-<img src="/_art/km_bombus_pennsylvanica.jpeg" alt="km_bombus_pennsylvanica">
-<img src="/_art/km_calligrapha_serpentina.jpeg" alt="km_calligrapha_serpentina">
-<img src="/_art/km_carrion_beetle.jpg" alt="km_carrion_beetle">
-<img src="/_art/km_crane_fly.png" alt="km_crane_fly">
-<img src="/_art/km_giant_stag_beetle.png" alt="km_giant_stag_beetle">
-<img src="/_art/km_lighteningbug.png" alt="km_lighteningbug">
-<img src="/_art/km_nezara_viridula.jpeg" alt="km_nezara_viridula">
-<img src="/_art/km_snipe_fly.jpeg" alt="km_snipe_fly">
-<b></b>
-<h2>North American Series - 2017</h2>
-<img src="/_art/km_american_kestral.jpg" alt="km_american_kestral">
-<img src="/_art/km_american_marten.jpg" alt="km_american_marten">
-<img src="/_art/km_beaver.jpg" alt="km_beaver">
-<img src="/_art/km_bluegill_sunfish.jpg" alt="km_bluegill_sunfish">
-<img src="/_art/km_deer.jpg" alt="km_deer">
-<img src="/_art/km_goldfinch.jpg" alt="km_goldfinch">
-<img src="/_art/km_leopard_slug.jpg" alt="km_leopard_slug">
-<img src="/_art/km_night_heron.jpg" alt="km_night_heron">
-<img src="/_art/km_northern_flicker.jpg" alt="km_northern_flicker">
-<img src="/_art/km_otter.jpg.png" alt="km_otter">
-<img src="/_art/km_painted_turtle.jpg" alt="km_painted_turtle">
-<img src="/_art/km_scarlet_tanager.jpg" alt="km_scarlet_tanager">
-<b></b>
-<h2>Indigo Bunting Phenological Poster</h2>
-<img src="/_art/km_indigo_bunting.JPG" alt="km_indigo_bunting">
