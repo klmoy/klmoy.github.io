@@ -5,21 +5,11 @@ permalink: /art/
 author_profile: true
 ---
 
-{% include base_path %}
-{% assign art_collection = site.art %}
-
-{% if art_collection %}
-  <h1 class="archive__title">Art Collection</h1>
-  {% for art in art_collection %}
-    <article class="archive__item">
-      <h2 class="archive__item-title">
-        <a href="{{ art.url | relative_url }}">{{ art.title }}</a>
-      </h2>
-      <div class="archive__item-excerpt">
-        {{ art.content }}
-      </div>
-    </article>
-  {% endfor %}
-{% else %}
-  <p>No art found in the collection.</p>
-{% endif %}
+{% for art in site.art %}
+  <div class="art-entry">
+    <h2>{{ art.title }}</h2>
+    <img src="{{ art.image | relative_url }}" alt="{{ art.title }}">
+    <p>{{ art.content }}</p>
+    <p><em>{{ art.date }}{% if art.location %} – {{ art.location }}{% endif %}</em></p>
+  </div>
+{% endfor %}
