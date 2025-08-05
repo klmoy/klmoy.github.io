@@ -7,6 +7,11 @@ author_profile: true
 
 {% include base_path %}
 
+
+{% for post in site.portfolio %}
+  {% include archive-single.html %}
+{% endfor %}
+
 <h2>Entomological Study - 2016</h2>
 <img src="/_art/km_magicicada_septendecim_25mb.jpg" alt="km_magicicada_septendecim">
 <img src="/_art/km_dynastes_tityus.jpg" alt="km_dynastes_tityus">
