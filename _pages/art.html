@@ -5,20 +5,28 @@ permalink: /art/
 author_profile: true
 ---
 
-{% include base_path %}
-{% capture written_label %}'None'{% endcapture %}
+---
+layout: archive
+title: "Art"
+permalink: /art/
+author_profile: true
+---
 
-{% for collection in site.art %}
-  {% unless collection.output == false or collection.label == "posts" %}
-    {% capture label %}{{ collection.label }}{% endcapture %}
-    {% if label != written_label %}
-      <h2 id="{{ label | slugify }}" class="archive__subtitle">{{ label }}</h2>
-      {% capture written_label %}{{ label }}{% endcapture %}
-    {% endif %}
-  {% endunless %}
-  {% for post in collection.docs %}
-    {% unless collection.output == false or collection.label == "posts" %}
-      {% include archive-single.html %}
-    {% endunless %}
+{% include base_path %}
+{% assign art_collection = site.art %}
+
+{% if art_collection %}
+  <h1 class="archive__title">Art Collection</h1>
+  {% for art in art_collection %}
+    <article class="archive__item">
+      <h2 class="archive__item-title">
+        <a href="{{ art.url | relative_url }}">{{ art.title }}</a>
+      </h2>
+      <div class="archive__item-excerpt">
+        {{ art.content }}
+      </div>
+    </article>
   {% endfor %}
-{% endfor %}
+{% else %}
+  <p>No art found in the collection.</p>
+{% endif %}
